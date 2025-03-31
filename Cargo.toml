@@ -1,0 +1,42 @@
+[package]
+name = "pw-cast"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cast-sender = "0.2.0"
+macro_rules_attribute = "0.2.0"
+pipewire = "0.8"
+libspa = "0.8"
+libspa-sys = "0.8.0"
+anyhow = "1.0.97"
+bytes = "1.10.1"
+tokio = { version = "1.44.1", features = [
+    "macros",
+    "net",
+    "rt",
+    "rt-multi-thread",
+] }
+futures-util = "0.3.31"
+hyper = { version = "1.6", features = ["server", "http1"] }
+http-body-util = "0.1"
+async-broadcast = "0.7"
+mp3lame-encoder = "0.2.1"
+hyper-util = { version = "0.1", features = ["tokio"] }
+mdns = "3.0.0"
+serde = { version = "1.0.219", features = ["derive"] }
+serde_derive = "1.0.219"
+serde_json = "1.0.140"
+derive_builder = "0.20.2"
+env_logger = "0.11.7"
+clap = { version = "4.5.34", features = ["derive"] }
+local-ip-address = "0.6.3"
+log = "0.4.27"
+svg = "0.18.0"
+base64 = "0.22.1"
+
+[patch.crates-io]
+cast-sender = { git = "https://github.com/zopieux/cast-sender.git", branch = "start-custom" }
+libspa = { git = "https://gitlab.freedesktop.org/zopieux/pipewire-rs.git", branch = "as-string" }
+libspa-sys = { git = "https://gitlab.freedesktop.org/zopieux/pipewire-rs.git", branch = "as-string" }
+pipewire = { git = "https://gitlab.freedesktop.org/zopieux/pipewire-rs.git", branch = "as-string" }
