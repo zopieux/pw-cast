@@ -18,27 +18,30 @@
         rustPlatform = pkgs.makeRustPlatform {
           rustc = rust;
           cargo = rust;
+          stdenv = pkgs.clang12Stdenv;
         };
-        nativeBuildInputs = with pkgs;[
+        nativeBuildInputs = with pkgs; [
           pkg-config
-          llvmPackages.clang
-          libopus
         ];
         buildInputs = with pkgs; [
           openssl
           pipewire
         ];
-        LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+        LIBCLANG_PATH = "${pkgs.llvmPackages_12.libclang.lib}/lib";
       in
       {
         packages.default = rustPlatform.buildRustPackage {
-          pname = "test-rust-cast";
+          pname = "pw-cast";
           version = "local";
           src = pkgs.lib.cleanSource ./.;
           inherit nativeBuildInputs buildInputs LIBCLANG_PATH;
           cargoLock.lockFile = ./Cargo.lock;
+          cargoLock.outputHashes = {
+            "cast-sender-0.2.0" = "sha256-7pMvE3LW6npOUhsq8gy2OTougXFXBm9ip8g/GtzkewM=";
+            "libspa-0.8.0" = "sha256-p/wrcNf+jBMeAGFxUzaOBfC3xxuymPspJzoTj0EFCr8=";
+          };
         };
-        devShell = pkgs.mkShell {
+        devShell = pkgs.mkShell.override { stdenv = pkgs.clang12Stdenv; } {
           inherit nativeBuildInputs LIBCLANG_PATH;
           buildInputs = buildInputs ++ [
             rust
